@@ -1,34 +1,61 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
+import Markdown from 'react-markdown'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const defaultMarkdown = `
+  # Welcome to my React Markdown Previewer!
+  
+  ## This is a sub-heading...
+  ### And here's some other cool stuff:
+  
+  Heres some code, \`<div></div>\`, between 2 backticks.
+  
+  \`\`\`
+  // this is multi-line code:
+  
+  function anotherExample(firstLine, lastLine) {
+    if (firstLine == '\`\`\`' && lastLine == '\`\`\`') {
+      return multiLineCode;
+    }
+  }
+  \`\`\`
+  
+  You can also make text **bold**... whoa!
+  Or _italic_.
+  Or... **_both!_**
+  
+  There's also [links](https://www.freecodecamp.com), and
+  > Block Quotes!
+  
+  ![React Logo w/ Text](https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/1200px-React-icon.svg.png)
+  
+  - And of course there are lists.
+    - Some are bulleted.
+        - With different indentation levels.
+          - That look like this.
+  `;
+
+  const [markdownText, setMarkdownText] =
+    useState(defaultMarkdown)
 
   return (
-    <>
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div>
+      <h1 style={{ textAlign: "center" }}>Markdown Previewer</h1>
+      <div className="boxesContainer">
+        <textarea
+          name="editor"
+          id="editor"
+          className='boxesContainer__editor'
+          value={markdownText}
+          onChange={(e) => setMarkdownText(e.target.value)}
+        >
+        </textarea>
+        <div className='boxesContainer__preview' id='preview'>
+          <Markdown>{markdownText}</Markdown>
+        </div>
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+    </div>
   )
 }
 
